@@ -16,8 +16,7 @@ void print_residual_vector(Matrix &m, std::vector<double> &result_vec) {
       res += m[i][j] * result_vec[j];
     }
     double r = m[i][m.get_size()] - res;
-    std::cout << "r" << i + 1 << " = " << r
-              << std::endl;
+    std::cout << "r" << i + 1 << " = " << r << std::endl;
   }
 }
 
@@ -75,9 +74,7 @@ std::vector<double> gauss_elimination(Matrix &m) {
   std::cout << "Matrix after Gaussian elimination:" << std::endl;
   m.print();
 
-  // Back substitution to solve for unknowns (if needed)
-
-  // Extract the solution vector (if needed)
+  // Back substitution to solve for unknowns
   std::vector<double> result(n);
   for (int i = n - 1; i >= 0; i--) {
     result[i] = m[i][m.get_size()];
