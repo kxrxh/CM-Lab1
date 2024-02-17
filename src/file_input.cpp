@@ -31,7 +31,8 @@ Matrix read_matrix(const char *filename) {
 
   std::stringstream ss(content);
 
-  int size;
+  int size, prec;
+  ss >> prec;
   ss >> size;
 
   std::vector<std::vector<double>> matrix =
@@ -44,6 +45,7 @@ Matrix read_matrix(const char *filename) {
   }
 
   auto m = Matrix(size, matrix);
+  m.set_prec(prec);
 
   return m;
 }

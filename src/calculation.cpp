@@ -1,10 +1,35 @@
 #include "calculation.hpp"
-#include <complex>
+#include "utils.hpp"
 
 const double EPSILON = 1e-10;
 
+void print_residual_vector(Matrix &m, std::vector<double> &result_vec) {
+  std::cout << "Residual vector:" << std::endl;
+  if (result_vec.size() != m.get_size()) {
+    std::cout << "Error: size of residual vector is not equal to size of matrix"
+              << std::endl;
+    return;
+  }
+  for (int i = 0; i < m.get_size(); i++) {
+    double res = 0;
+    for (int j = 0; j < m.get_size(); j++) {
+      res += m[i][j] * result_vec[j];
+    }
+    double r = m[i][m.get_size()] - res;
+    std::cout << "r" << i + 1 << " = " << r
+              << std::endl;
+  }
+}
+
 std::vector<double> gauss_elimination(Matrix &m) {
-  int n = m.get_size();
+  const int n = m.get_size();
+  std::cout << "Matrix before Gaussian elimination:" << std::endl;
+  m.print();
+
+  Matrix old_m = m.copy();
+
+  double det = 1.0; // Initialize determinant
+
   for (int i = 0; i < n; i++) {
     double max_el = std::fabs(m[i][i]);
     int max_row = i;
@@ -16,15 +41,23 @@ std::vector<double> gauss_elimination(Matrix &m) {
       }
     }
 
+    // Swap current row with the row containing maximum element
     if (max_row != i) {
       m.swap_rows(i, max_row);
+      det *= -1; // Change the sign of determinant for row swaps
     }
+
     // Check if the pivot element is too close to zero
     if (std::fabs(m[i][i]) < EPSILON) {
+      det = 0;
       // Skip this column, it's effectively zero
       continue;
     }
 
+    // Update determinant
+    det *= m[i][i];
+
+    // Perform Gaussian elimination to make elements below the pivot zero
     for (int k = i + 1; k < n; k++) {
       double factor = m[k][i] / m[i][i];
       for (int j = i; j <= n; j++) {
@@ -32,21 +65,29 @@ std::vector<double> gauss_elimination(Matrix &m) {
       }
     }
   }
+  std::cout << "Matrix determinant: " << pretty_double(det, 3) << std::endl;
+  if (det == 0) {
+    std::cout << "Determinant is zero, no solution exists." << std::endl;
+    return {};
+  }
+  std::cout << "-----------------------------------------------------------\n";
 
-  std::cout << "Matrix after gauss elimination:" << std::endl;
+  std::cout << "Matrix after Gaussian elimination:" << std::endl;
   m.print();
 
-  std::vector<double> result(n);
+  // Back substitution to solve for unknowns (if needed)
 
+  // Extract the solution vector (if needed)
+  std::vector<double> result(n);
   for (int i = n - 1; i >= 0; i--) {
     result[i] = m[i][m.get_size()];
     for (int j = i + 1; j < n; j++) {
       result[i] -= m[i][j] * result[j];
     }
-    result[i] /= m[i][i];
-    // round result[i] to 10 decimal places
-    // result[i] = std::round(result[i] * 10000000000) / 10000000000;
+    result[i] /= m[i][i]; // divide by diagonal element
   }
+
+  print_residual_vector(old_m, result);
 
   return result;
 }
