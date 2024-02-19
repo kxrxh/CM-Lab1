@@ -4,6 +4,8 @@ PROJECT_NAME := lab1_cpp
 # Specify the build directory
 BUILD_DIR := build
 
+INPUT_FOLDER := ./inputs
+
 # Default target
 all: release
 
@@ -27,6 +29,14 @@ release: $(BUILD_DIR)
 	cd $(BUILD_DIR) && cmake -DCMAKE_BUILD_TYPE=Release ..
 	cmake --build $(BUILD_DIR) --config Release
 	mv $(BUILD_DIR)/$(PROJECT_NAME) ./$(PROJECT_NAME)
+
+run: release
+	./$(PROJECT_NAME) -f $(INPUT_FOLDER)/input1.txt
+	./$(PROJECT_NAME) -f $(INPUT_FOLDER)/input2.txt
+	./$(PROJECT_NAME) -f $(INPUT_FOLDER)/input3.txt
+	./$(PROJECT_NAME) -f $(INPUT_FOLDER)/input4.txt
+	./$(PROJECT_NAME) -f $(INPUT_FOLDER)/input5.txt
+	./$(PROJECT_NAME) -f $(INPUT_FOLDER)/input6.txt
 
 # Phony targets
 .PHONY: all clear debug release
