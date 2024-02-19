@@ -18,7 +18,6 @@ void replaceAll(std::string &str, const std::string &from,
   }
 }
 
-
 std::ifstream open_file(const char *filename) {
   std::ifstream f(filename);
   if (!f.good()) {
@@ -29,7 +28,6 @@ std::ifstream open_file(const char *filename) {
 
   return f;
 }
-
 
 Matrix read_matrix(const char *filename) {
   auto file = open_file(filename);

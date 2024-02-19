@@ -1,7 +1,6 @@
 #include "generator.hpp"
 #include <random>
 
-
 Matrix generate_matrix(int size) {
   Matrix matrix(size);
   std::default_random_engine eng(static_cast<unsigned>(std::time(nullptr)));

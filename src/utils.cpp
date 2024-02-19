@@ -1,6 +1,5 @@
 #include "utils.hpp"
 
-
 std::string pretty_double(double x, int prec) {
   std::stringstream oss;
 
