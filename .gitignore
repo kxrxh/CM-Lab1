@@ -1,3 +1,4 @@
 build
 .cache
 lab1_cpp
+.vscode
