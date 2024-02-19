@@ -19,7 +19,6 @@ int Matrix::get_size() const { return n; }
 
 void Matrix::set_prec(int pers) { prec = pers; }
 
-
 Matrix Matrix::copy() const {
   Matrix m(n);
   for (int i = 0; i < n; i++) {

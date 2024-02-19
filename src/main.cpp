@@ -6,16 +6,15 @@
 #include <iostream>
 #include <string.h>
 
-/// @brief
-/// @param solution
 void print_solution(std::vector<double> &solution) {
+  draw_line();
+  std::cout << "Solution vector:\n";
   int i = 1;
-  std::cout << "-----------------------------------------------------------\n";
-  std::cout << "Solution:\n";
   for (auto &r : solution) {
     std::cout << "x" << i++ << " = " << pretty_double(r, 5) << "\n";
   }
 }
+
 int main(int argc, const char *argv[]) {
   if (argc == 1) {
     std::cout << "No arguments provided." << std::endl;
