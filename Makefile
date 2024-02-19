@@ -14,6 +14,7 @@ $(BUILD_DIR):
 # Clear the build directory
 clear:
 	rm -rf $(BUILD_DIR)
+	rm -rf .cache
 	rm -f $(PROJECT_NAME)
 
 # Debug build
